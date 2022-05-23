@@ -1,0 +1,43 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: debugging
+
+#trigger:
+#  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Debug
+    displayName: Debug
+    jobs:
+      - job: Debug
+        displayName: Debug
+        steps:
+          - checkout: self
+            submodules: true
+            displayName: Initialize Git Repo
+          
+          - script: |
+              echo "Build.ArtifactStagingDirectory: $(Build.ArtifactStagingDirectory)"
+              echo "Build.BuildId: $(Build.BuildId)"
+              echo "environment: $(environment)"
+              echo "Pipeline.Workspace: $(Pipeline.Workspace)"
+              echo "System.DefaultWorkingDirector: $(System.DefaultWorkingDirectory)"
+              echo "System.DefinitionId: $(System.DefinitionId)"
+              echo "System.TeamProject: $(System.TeamProject)"
+              echo "System.TeamProjectId: $(System.TeamProjectId)"
+
+              echo "services/frontend"
+              ls -l services/frontend
+              
+              echo "services/backend/movie"
+              ls -l services/backend/movie
+              
+              echo "services/backend/music"
+              ls -l services/backend/music
+            displayName: Debug
